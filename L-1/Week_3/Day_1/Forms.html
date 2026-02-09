@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+
+    <!-- 1. Wrap all input tags in a form tag -->
+    <form id="regForm">
+        <input type="text" name="name" placeholder="Name"><br><br>
+        
+        <select name="gender">
+            <option value="">--Select Gender--</option>
+            <option value="male">M</option>
+            <option value="female">F</option>
+        </select><br><br>
+
+        <input type="text" name="email" placeholder="Email"><br><br>
+        <input type="text" name="mobile" placeholder="Mobile"><br><br>
+
+        <!-- 2. Use input type="submit" for making button -->
+        <input type="submit" value="DISPLAY DATA">
+        
+        <!-- Standard reset button for the form fields -->
+        <input type="reset" value="RESET FORM">
+        
+        <!-- Button to clear the display headings -->
+        <button type="button" id="clearDisplay">RESET DISPLAY</button>
+    </form>
+
+    <hr>
+    <h1 id="dName">NAME</h1>
+    <h2 id="dGender">GENDER</h2>
+    <h3 id="dEmail">EMAIL</h3>
+    <h4 id="dMobile">MOBILE</h4>
+
+    <script>
+        // 3. Always select form and apply event
+        const form = document.querySelector("form");
+
+        // 4. Always apply submit event
+        form.addEventListener("submit", function(event) {
+            // 5. Use event.preventDefault()
+            event.preventDefault();
+
+            // Accessing values using event.target and the 'name' attribute
+            let nameValue = event.target.name.value;
+            let genderValue = event.target.gender.value;
+            let emailValue = event.target.email.value;
+            let mobileValue = event.target.mobile.value;
+
+            // Updating the display
+            document.getElementById("dName").innerText = nameValue || "NAME";
+            document.getElementById("dGender").innerText = genderValue.toUpperCase() || "GENDER";
+            document.getElementById("dEmail").innerText = emailValue || "EMAIL";
+            document.getElementById("dMobile").innerText = mobileValue || "MOBILE";
+        });
+
+        // Logic for Reset Display button
+        document.getElementById("clearDisplay").addEventListener("click", function() {
+            document.getElementById("dName").innerText = "NAME";
+            document.getElementById("dGender").innerText = "GENDER";
+            document.getElementById("dEmail").innerText = "EMAIL";
+            document.getElementById("dMobile").innerText = "MOBILE";
+        });
+    </script>
+</body>
+</html>

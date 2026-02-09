@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>hello</h1>
+
+</body>
+<script>
+    // 1. write/save/set in Ls
+    localStorage.setItem('name', 'Bhanu');
+    localStorage.age = 24;
+    localStorage['city'] = 'Hyderabad';
+    // 2. read/get from Ls
+     const name = localStorage.getItem('name'); // 'Bhanu'
+     console.log(name);
+     console.log(localStorage.age);
+    //  3. remove/delete from Ls
+    localStorage.removeItem('city');
+    // 4. clear all from Ls 
+    localStorage.clear();
+    // 5. Update in Ls
+    localStorage.setItem('name', 'Bhanu');
+    localStorage.setItem('name', 'Bhanu Pratap');
+    // 6. length of Ls
+    // console.log(localStorage.length);
+</script>
+</html>

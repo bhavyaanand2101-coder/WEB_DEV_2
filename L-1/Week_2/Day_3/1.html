@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Types of selector</title>
+</head>
+
+<body>
+    <div class="ipl">
+        <h1>rohit</h1>
+        <div class="csk">dhoni</div>
+        <h1 id="rcb">virat</h1>
+        <p class="csk" id="rcb">shami</p>
+        <div>
+            <h1>hardhik</h1>
+            <h2>sam</h2>
+            <p>aman</p>
+            <p>priya</p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    // 1. getElementById -> 1st match el
+
+    const idEl = document.getElementById("rcb");
+    // console.log(idEl);
+
+    idEl.style.color = "red";
+
+
+    // 2. getElementsByClassName -> all match el
+
+    const classEl = document.getElementsByClassName("csk");
+    console.log(classEl[1].innerText);
+
+    // 3. getElementsByTagName -> all match el
+
+    const tagEl = document.getElementsByTagName("p");
+    console.log(tagEl);
+
+
+    // 4. querySelector -> return only 1st el
+
+    const queryEl = document.querySelector("p+p")
+    console.log(queryEl);
+
+
+    // 5. querySelectorAll -> return all match el
+
+    const queryElAll = document.querySelectorAll(".ipl h1")
+    console.log(queryElAll);
+
+</script>

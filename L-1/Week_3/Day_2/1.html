@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating HTML Element Using JS</title>
+</head>
+<body>
+    <div class="cont">hello world</div>
+</body>
+<script>
+    
+    //STEP 1 CREATE HTML TAG ELEMENT
+    const el =  document.createElement("div")
+    console.log(el);
+
+    //STEP 2 WRITE/ADD VALUE TO ELEMENT
+    el.innerText = "hello world"
+
+    //STEP 3 SET ATTRIBUTES
+    el.setAttribute("class","cont")
+    
+    // STEP 4 APPLY CSS
+    el.style.color = "GREEN"
+    el.style.backgroundColor =" yellow"
+
+    //STEP 5 ATTACH EL  TO BODY FOR VISIBILITY
+    document.querySelector("body").append(el)
+</script>
+</html>
+

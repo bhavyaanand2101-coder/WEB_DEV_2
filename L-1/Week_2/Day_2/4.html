@@ -1,0 +1,41 @@
+<!-- <!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get value from input tag</title>
+</head>
+<body>
+    <input type="text" id="myInput" value="type here"/>
+    <button onclick="getValue()">click me</button>
+</body>
+</html>
+<script>
+    function getValue(){
+        const inputElement = document.getElementById("myInput");
+        const value = inputElement.value;
+        console.log(value);
+        alert(value);
+    }
+</script>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="myInput" placeholder="Enter" value="">
+    <button onclick="getName()">Click Me</button>
+</body>
+<script>
+    function getName(){
+        const el= document.getElementById("myInput");
+        console.log(el);
+        const data= el.value;
+        console.log(data);
+    }
+</script>
+</html>

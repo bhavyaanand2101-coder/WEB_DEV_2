@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get value from html element</title>
+</head>
+<body>
+ <div id="cont">Hello World</div>   
+</body>
+<script>
+    // Step 1: - catch/select id by using element using getElementById
+    const element =document .getElementById('cont');
+    console.log(element);
+
+// Step 2 : read/get value from element
+const data = element.innerText;
+console.log(data);
+
+// Step 3: write/update
+element.innerText = "Hello Bhavya";
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event propagation</title>
+    <style>
+        div{
+            border: 10px blue solid;
+            margin: 20px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<p>Event propagation concepts such as bubbling and capturing</p>
+<div class="grand">Grand Element
+    <div class="parent">Parent Element
+        <div class="child">Child Element</div>
+    </div>
+</div>
+</body>
+<script>
+    const grand = document.querySelector('.grand');
+    const parent = document.querySelector('.parent');
+    const child = document.querySelector('.child');
+    grand.addEventListener('click', function(){
+        console.log('Grand element capture');
+    }, true);
+    parent.addEventListener('click', function(){
+        console.log('Parent element capture');
+    }, true);
+    child.addEventListener('click', function(){
+        console.log('Child element capture');
+    }, true);
+
+     grand.addEventListener('click', function(){
+        console.log('Grand element bubbling');
+    }, );
+    parent.addEventListener('click', function(){
+        console.log('Parent element bubling');
+    }, );
+    child.addEventListener('click', function(e){
+        e.stopPropagation();
+        console.log('Child element bubbling');
+
+    }, );
+</script>
+</html>

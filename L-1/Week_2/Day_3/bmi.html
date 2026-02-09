@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        /* CSS for Styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h2 { color: #333; }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background-color: #218838; }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none; /* Hidden until calculated */
+        }
+        .bmi-value { font-size: 24px; font-weight: bold; }
+        .status { font-weight: bold; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>BMI Calculator</h2>
+    
+    <div class="input-group">
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" placeholder="e.g. 70" step="0.1">
+    </div>
+
+    <div class="input-group">
+        <label for="height">Height (meters):</label>
+        <input type="number" id="height" placeholder="e.g. 1.75" step="0.01">
+    </div>
+
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <div id="result">
+        <div class="bmi-value" id="bmi-num"></div>
+        <div class="status" id="bmi-status"></div>
+    </div>
+</div>
+
+<script>
+    function calculateBMI() {
+        // 1. Get inputs
+        const weight = parseFloat(document.getElementById('weight').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const resultDiv = document.getElementById('result');
+        const bmiNum = document.getElementById('bmi-num');
+        const bmiStatus = document.getElementById('bmi-status');
+
+        // 2. Validate Input
+        if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+            alert("Please enter valid positive numbers for weight and height.");
+            return;
+        }
+
+        // 3. Calculate BMI
+        // Formula: BMI = weight / (height * height)
+        const bmi = weight / (height * height);
+        const roundedBMI = bmi.toFixed(1); // Round to 1 decimal place
+
+        // 4. Determine Category and Color
+        let category = "";
+        let color = "";
+
+        if (bmi <= 18.4) {
+            category = "Underweight";
+            color = "#ffc107"; // Yellow
+        } else if (bmi >= 18.5 && bmi <= 24.9) {
+            category = "Normal Weight";
+            color = "#28a745"; // Green
+        } else if (bmi >= 25 && bmi <= 29.9) {
+            category = "Overweight";
+            color = "#fd7e14"; // Orange
+        } else {
+            category = "Obese";
+            color = "#dc3545"; // Red
+        }
+
+        // 5. Display Results
+        bmiNum.innerHTML = roundedBMI;
+        bmiStatus.innerHTML = category;
+        resultDiv.style.display = "block";
+        resultDiv.style.backgroundColor = color + "22"; // Light version of color
+        bmiStatus.style.color = color;
+    }
+</script>
+
+</body>
+</html>
