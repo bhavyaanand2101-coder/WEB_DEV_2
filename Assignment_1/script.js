@@ -1,80 +1,59 @@
-// 1. Selection
-const eventForm = document.getElementById('eventForm');
-const eventContainer = document.getElementById('eventContainer');
-const clearAllBtn = document.getElementById('clearAllBtn');
-const addSampleBtn = document.getElementById('addSampleBtn');
-const keyPressedText = document.getElementById('keyPressed');
+// 1. SELECT EVERYTHING WE NEED
+const form = document.getElementById('eventForm');
+const list = document.getElementById('eventContainer');
+const clearBtn = document.getElementById('clearAllBtn');
+const sampleBtn = document.getElementById('addSampleBtn');
+const keyDisplay = document.getElementById('keyPressed');
 
-// 2. Event Creation logic
-eventForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
+// 2. ADD AN EVENT (Form Handling)
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Stop page from refreshing
+
+    // Get the values from the inputs
     const title = document.getElementById('title').value;
     const date = document.getElementById('date').value;
     const category = document.getElementById('category').value;
-    const description = document.getElementById('description').value;
 
-    addEventToDOM(title, date, category, description);
-    eventForm.reset();
-});
-
-function addEventToDOM(title, date, category, desc) {
-    // Remove "No events yet" message if it exists
-    const emptyMsg = eventContainer.querySelector('.empty-msg');
-    if (emptyMsg) emptyMsg.remove();
-
-    // Dynamically create HTML element
-    const div = document.createElement('div');
-    div.classList.add('event-item');
-    
-    div.innerHTML = `
+    // Create a new "Card" using a template string
+    const card = document.createElement('div');
+    card.className = 'event-item';
+    card.innerHTML = `
         <h3>${title}</h3>
-        <p>📅 ${date}</p>
-        <span class="badge">${category}</span>
-        <p>${desc}</p>
-        <button class="delete-btn">×</button>
+        <p>Date: ${date} | <b>${category}</b></p>
+        <button class="delete-btn">Delete</button>
     `;
 
-    eventContainer.appendChild(div);
-}
+    // Add it to the list and clear the form
+    list.appendChild(card);
+    form.reset();
+    
+    // Remove the "No events" message if it's there
+    if(list.querySelector('.empty-msg')) list.querySelector('.empty-msg').remove();
+});
 
-// 3. Event Delegation (Deleting an event)
-eventContainer.addEventListener('click', (e) => {
+// 3. DELETE AN EVENT (Event Delegation)
+// We listen to the WHOLE list, then check if a Delete button was clicked
+list.addEventListener('click', function(e) {
     if (e.target.classList.contains('delete-btn')) {
         e.target.parentElement.remove();
-        
-        // Check if list is empty to show message again
-        if (eventContainer.children.length === 0) {
-            eventContainer.innerHTML = '<p class="empty-msg">No events yet. Add your first event!</p>';
-        }
     }
 });
 
-// 4. Clear All & Sample Events
-clearAllBtn.addEventListener('click', () => {
-    eventContainer.innerHTML = '<p class="empty-msg">No events yet. Add your first event!</p>';
-});
+// 4. CLEAR ALL BUTTON
+clearBtn.onclick = function() {
+    list.innerHTML = '<p class="empty-msg">No events yet.</p>';
+};
 
-addSampleBtn.addEventListener('click', () => {
-    addEventToDOM("Tech Conference", "2024-05-20", "Conference", "A great day for JS learning.");
-    addEventToDOM("React Workshop", "2024-06-15", "Workshop", "Hands-on coding session.");
-});
+// 5. SAMPLE EVENTS BUTTON
+sampleBtn.onclick = function() {
+    const sample = document.createElement('div');
+    sample.className = 'event-item';
+    sample.innerHTML = `<h3>Sample Meeting</h3><p>2024-12-01</p><button class="delete-btn">Delete</button>`;
+    list.appendChild(sample);
+    if(list.querySelector('.empty-msg')) list.querySelector('.empty-msg').remove();
+};
 
-// 5. Event Handling: Keypress demo
-window.addEventListener('keydown', (e) => {
-    keyPressedText.textContent = e.key;
-});
-
-// 6. Text Manipulation Demo (Comparing innerHTML vs innerText)
-const propertyDemo = document.getElementById('propertyDemo');
-const demoText = "<strong>Demo:</strong> Testing <span>Properties</span>";
-
-propertyDemo.innerHTML = `
-    <p><strong>Original HTML:</strong> &lt;strong&gt;Bold Text&lt;/strong&gt; with spaces</p>
-    <div id="testArea" style="display:none;"><strong>Bold Text</strong>     with spaces</div>
-    <ul>
-        <li><strong>innerHTML:</strong> Renders tags</li>
-        <li><strong>innerText:</strong> Removes HTML, collapses spaces</li>
-        <li><strong>textContent:</strong> Removes HTML, keeps spaces</li>
-    </ul>
-`;
+// 6. KEYBOARD TRACKING
+window.onkeydown = function(e) {
+    keyDisplay.innerText = e.key;
+};
