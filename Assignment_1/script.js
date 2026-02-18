@@ -5,7 +5,7 @@ const clearBtn = document.getElementById('clearAllBtn');
 const sampleBtn = document.getElementById('addSampleBtn');
 const keyDisplay = document.getElementById('keyPressed');
 
-// 2. ADD AN EVENT (Form Handling)
+// 2. ADD AN EVENT 
 form.addEventListener('submit', function(e) {
     e.preventDefault(); // Stop page from refreshing
 
