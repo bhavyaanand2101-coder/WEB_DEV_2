@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Easy Event Dashboard</title>
+    <style>
+        /* CSS - This makes the page look pretty */
+        body {
+            background-color: #f0f2f5; /* Light grey background */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Puts everything in the middle */
+            padding: 20px;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1); /* Adds a soft shadow */
+            margin-bottom: 20px;
+        }
+
+        h2 { color: #333; text-align: center; }
+
+        /* Style for the inputs where you type */
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Makes sure padding doesn't break width */
+        }
+
+        /* The Add Button */
+        .add-btn {
+            background-color: #28a745; /* Green */
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* The Delete Button */
+        .del-btn {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right; /* Moves button to the right side of the card */
+        }
+
+        /* This is how a single event card looks */
+        .event-card {
+            background: #fff;
+            border-left: 5px solid #007bff; /* Blue strip on the side */
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Event Dashboard</h1>
+
+    <!-- SECTION 1: The Form to enter data -->
+    <div class="box">
+        <h2>Add New Event</h2>
+        <input type="text" id="eventName" placeholder="Enter Event Name (e.g. Physics Lab)">
+        <select id="eventCategory">
+            <option>School</option>
+            <option>Work</option>
+            <option>Personal</option>
+        </select>
+        <button class="add-btn" onclick="addEvent()">Save Event</button>
+    </div>
+
+    <!-- SECTION 2: The List where events appear -->
+    <div class="box">
+        <h2>My Saved Events</h2>
+        <div id="displayArea">
+            <p style="color: gray; text-align: center;">No events saved yet.</p>
+        </div>
+    </div>
+
+    <!-- SECTION 3: Keyboard Tracker (Just for fun) -->
+    <div class="box" style="text-align: center;">
+        <p>Last Key You Pressed: <b id="keyText">None</b></p>
+    </div>
+
+    <script>
+        // JAVASCRIPT - This adds the "logic" (makes the buttons work)
+
+        // 1. Function to add an event
+        function addEvent() {
+            // Get the text from the Input box
+            var name = document.getElementById("eventName").value;
+            // Get the choice from the Select box
+            var category = document.getElementById("eventCategory").value;
+            // Find the area where we want to put the new card
+            var display = document.getElementById("displayArea");
+
+            // Check if the user typed anything
+            if (name == "") {
+                alert("Please type an event name first!");
+                return; // Stop here if empty
+            }
+
+            // If this is the first event, clear the "No events saved" text
+            if (display.innerHTML.includes("No events saved")) {
+                display.innerHTML = ""; 
+            }
+
+            // Create a new "div" (a box) for the event
+            var newCard = document.createElement("div");
+            newCard.className = "event-card"; // Give it the pretty CSS style
+
+            // Fill the box with text and a Delete button
+            newCard.innerHTML = "<b>" + name + "</b> (" + category + ")" + 
+                                '<button class="del-btn" onclick="deleteMe(this)">Delete</button>';
+
+            // Put this new box into our display area
+            display.appendChild(newCard);
+
+            // Clear the input box so you can type the next one
+            document.getElementById("eventName").value = "";
+        }
+
+        // 2. Function to delete an event
+        function deleteMe(button) {
+            // "button.parentElement" is the event-card
+            button.parentElement.remove();
+        }
+
+        // 3. Simple Keyboard Tracker
+        window.onkeydown = function(event) {
+            // Find the text spot and change it to the key you pressed
+            document.getElementById("keyText").innerText = event.key;
+        };
+    </script>
+
+</body>
+</html>
