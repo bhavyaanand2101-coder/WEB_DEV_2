@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 4. Lexical Scope in js -> visibility/accessibility
+
+function hello() {
+    var name="bhavya";
+    let age= 19;
+
+    console.log(name);
+    console.log(age);
+
+    if (true){
+        name="Bhanu";
+        age=222;
+        console.log(name);
+        console.log(age);
+    }
+console.log(name);
+console.log(age);
+}
+</script>
+</html>
