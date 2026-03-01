@@ -118,3 +118,47 @@
 // console.log("start");
 // console.log(homework);
 
+
+// function dohomework(){
+//     return new Promise((resolve,reject)=>{
+//         setTimeout(()=>{
+//             let homeowrkDone= true;
+//             if(homeowrkDone){
+//                 resolve("homework completed");
+//             }else{
+//                 reject("homework not done");
+//             }
+//         },3000);
+//     });
+// }
+// console.log("start");
+// dohomework()
+//  .then((result)=>{
+//         console.log(result);
+//     })
+//     .catch((error)=>{
+//         console.log(error);
+//     });
+
+// console.log("end");
+
+// function fetchData(){
+//     return new Promise((resolve,reject)=>{
+//         setTimeout(()=>{
+//             if(Math.random()>0.5){
+//                 resolve({ success:true, data:'Fetched data' });
+//             }else{
+//                 reject("Error");
+//             }
+//         },1000);
+//     });
+// }
+
+// console.log("Fetchingg data...");
+// fetchData()
+//     .then((response)=>{
+//         console.log("Success:",response);
+//     })
+//     .catch((error)=>{
+//         console.log("Error:");
+//     });
