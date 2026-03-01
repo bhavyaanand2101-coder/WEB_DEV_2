@@ -16,7 +16,19 @@
 // console.log(ans);
 
 // arrow function
-const add = (a)=>(b)=>(c)=>(d)=>a+b+c+d;
+// const add = (a)=>(b)=>(c)=>(d)=>a+b+c+d;
  
-let ans = add(1)(2)(3)(4);
-console.log(ans);
+// let ans = add(1)(2)(3)(4);
+// console.log(ans);
+
+function main() {
+    console.log("start");
+    helper();
+console.log("mid end");
+}
+function helper(){
+    console.log("helper function");
+}
+
+main();
+

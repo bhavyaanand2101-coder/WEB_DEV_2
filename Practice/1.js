@@ -45,14 +45,42 @@
 // }, true);
 
 // Bubbling
-document.getElementById("outer").addEventListener("click", ()=> {
-    alert("Outer Div (Bubbling)");
-    });
+// document.getElementById("outer").addEventListener("click", ()=> {
+//     alert("Outer Div (Bubbling)");
+//     });
 
-document.getElementById("inner").addEventListener("click", ()=> {
-    alert("Inner Div (Bubbling)");
-});
+// document.getElementById("inner").addEventListener("click", ()=> {
+//     alert("Inner Div (Bubbling)");
+// });
 
-document.getElementById("btn").addEventListener("click", ()=> {
-    alert("Button (Bubbling)");
-});
+// document.getElementById("btn").addEventListener("click", ()=> {
+//     alert("Button (Bubbling)");
+// });
+
+//  call stack execution order-
+
+// function main() {
+//     console.log("start");
+//     helper();
+// console.log("mid end");
+// }
+// function helper(){
+//     console.log("helper function");
+// }
+// main();
+
+// /**
+//  * An example of an infinite recursion function.
+//  * This function calls itself indefinitely, causing a stack overflow error.
+//  * @example
+//  * infinite();
+//  */
+// function infinite(){
+//     /**
+//      * Recursively calls the infinite function, causing a stack overflow error.
+//      * @returns {undefined}
+//      */
+//     infinite();
+// }
+// infinite();
+
