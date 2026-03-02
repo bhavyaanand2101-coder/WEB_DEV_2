@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2 - Async Weather Tracker</title>
+    <style>
+        /* 1. BASIC STYLING - Matching PDF Theme */
+        body {
+            background: linear-gradient(#1e3a8a, #0f172a); /* Dark Blue Gradient */
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { width: 100%; max-width: 800px; }
+        
+        /* White Card Style from PDF */
+        .card {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        /* Input & Buttons */
+        input { padding: 10px; width: 70%; border-radius: 5px; border: 1px solid #ccc; }
+        button { 
+            padding: 10px; 
+            background: #e67e22; /* Orange color */
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+
+        /* History Buttons */
+        .hist-btn {
+            background: #e67e22;
+            margin: 5px 5px 0 0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* Weather Info Rows */
+        .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .row b { color: #555; }
+
+        /* Console Log Styles */
+        .console {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 120px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 style="text-align: center;">☀️ Async Weather Tracker</h1>
+
+        <div class="grid">
+            <!-- LEFT COLUMN: Search -->
+            <div class="card">
+                <h3>Search City</h3>
+                <input type="text" id="cityInput" placeholder="Enter city name...">
+                <button id="searchBtn">Search</button>
+
+                <h4>Search History</h4>
+                <div id="historyList"></div>
+            </div>
+
+            <!-- RIGHT COLUMN: Weather Details -->
+            <div class="card">
+                <h3>Weather Info</h3>
+                <div id="weatherInfo">
+                    <p style="text-align: center; color: #999;">Search a city to see details</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM: Event Loop Logs -->
+        <div class="card">
+            <h3>Console - Event Loop Analysis</h3>
+            <div id="logBox" class="console"></div>
+        </div>
+    </div>
+
+    <script>
+        // STEP 1: Predefined Data for specific cities
+        const predefinedData = {
+            "delhi": { name: "Delhi", max: "35°C", min: "24°C", humidity: "50%", air: "12 km/h" },
+            "indore": { name: "Indore", max: "32°C", min: "22°C", humidity: "45%", air: "10 km/h" },
+            "mumbai": { name: "Mumbai", max: "30°C", min: "27°C", humidity: "85%", air: "20 km/h" },
+            "london": { name: "London", max: "18°C", min: "10°C", humidity: "60%", air: "15 km/h" }
+        };
+
+        // STEP 2: Get DOM elements
+        const cityInput = document.getElementById('cityInput');
+        const logBox = document.getElementById('logBox');
+        const weatherInfo = document.getElementById('weatherInfo');
+        const historyList = document.getElementById('historyList');
+
+        // STEP 3: Simple function to add logs to the UI console
+        function addLog(text) {
+            logBox.innerHTML += `<div> > ${text}</div>`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        // STEP 4: The Main Async Function (Core of the Lab)
+        async function getWeatherData(city) {
+            const cityName = city.toLowerCase().trim();
+            logBox.innerHTML = ""; // Clear console for new search
+
+            // --- DEMONSTRATING EVENT LOOP ORDER ---
+            addLog("Sync Start"); // 1. Synchronous
+
+            // Microtask (Promise)
+            Promise.resolve().then(() => addLog("Promise.then (Microtask)")); 
+
+            // Macrotask (setTimeout)
+            setTimeout(() => addLog("setTimeout (Macrotask)"), 0); 
+
+            addLog("[ASYNC] Fetching data..."); // 2. Async Call Start
+
+            try {
+                // Requirement: Handle invalid input gracefully
+                if (!cityName) throw new Error("Please enter a city name");
+
+                let data;
+                // Check if we have predefined data, otherwise use a fake delay to simulate API
+                if (predefinedData[cityName]) {
+                    data = predefinedData[cityName];
+                    await new Promise(r => setTimeout(r, 500)); // Simulate network lag
+                } else {
+                    // Actual Fetch API call for other cities
+                    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=8d90f23071379f824e8a4a589574889c`);
+                    if (!res.ok) throw new Error("City not found");
+                    const json = await res.json();
+                    data = { name: json.name, max: json.main.temp_max+"°C", min: json.main.temp_min+"°C", humidity: json.main.humidity+"%", air: json.wind.speed+" m/s" };
+                }
+
+                // Update the UI with the fields requested
+                weatherInfo.innerHTML = `
+                    <div class="row"><b>City</b> <span>${data.name}</span></div>
+                    <div class="row"><b>Max Temp</b> <span>${data.max}</span></div>
+                    <div class="row"><b>Min Temp</b> <span>${data.min}</span></div>
+                    <div class="row"><b>Humidity</b> <span>${data.humidity}</span></div>
+                    <div class="row"><b>Air (Wind)</b> <span>${data.air}</span></div>
+                `;
+
+                saveHistory(data.name); // Save to Local Storage
+                addLog("[ASYNC] Data received successfully");
+
+            } catch (err) {
+                weatherInfo.innerHTML = `<p style="color:red; text-align:center;">${err.message}</p>`;
+                addLog(`[ERROR] ${err.message}`);
+            }
+
+            addLog("Sync End"); // 3. Synchronous finish
+        }
+
+        // STEP 5: Local Storage Logic
+        function saveHistory(city) {
+            let history = JSON.parse(localStorage.getItem('myHistory')) || [];
+            if (!history.includes(city)) {
+                history.push(city);
+                localStorage.setItem('myHistory', JSON.stringify(history));
+                showHistory();
+            }
+        }
+
+        function showHistory() {
+            let history = JSON.parse(localStorage.getItem('myHistory')) || ["Delhi", "Indore", "Mumbai", "London"];
+            historyList.innerHTML = "";
+            history.forEach(city => {
+                let btn = document.createElement('button');
+                btn.className = "hist-btn";
+                btn.innerText = city;
+                btn.onclick = () => getWeatherData(city);
+                historyList.appendChild(btn);
+            });
+        }
+
+        // STEP 6: Event Listeners
+        document.getElementById('searchBtn').onclick = () => getWeatherData(cityInput.value);
+
+        // Load predefined history on page start
+        window.onload = showHistory;
+
+    </script>
+</body>
+</html>
