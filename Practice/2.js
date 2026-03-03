@@ -162,3 +162,14 @@
 //     .catch((error)=>{
 //         console.log("Error:");
 //     });
+
+
+// Microtask Vs Macrotask
+console.log("start");
+setTimeout(()=>{
+    console.log("setTimeout");
+},0);
+Promise.resolve().then(()=>{
+    console.log("Promise")
+});
+console.log("end");
