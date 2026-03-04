@@ -165,11 +165,76 @@
 
 
 // Microtask Vs Macrotask
-console.log("start");
-setTimeout(()=>{
-    console.log("setTimeout");
-},0);
-Promise.resolve().then(()=>{
-    console.log("Promise")
-});
-console.log("end");
+// console.log("start");
+// setTimeout(()=>{
+//     console.log("setTimeout");
+// },0);
+// Promise.resolve().then(()=>{
+//     console.log("Promise")
+// });
+// console.log("end");
+
+// Code without async-await
+// function orderfood(){
+//     return new Promise((resolve,reject)=>{
+//         setTimeout(()=>{
+//             console.log("ordered");
+//             resolve()
+//         },2000);
+
+//     });
+// }
+// function preparing(){
+//     return new Promise((resolve)=>{
+//         setTimeout(()=>{
+//             console.log("Restraudant is preparing");
+//             resolve();
+//         },1000);
+//     });
+// }
+// function delivery(){
+//     return new Promise((resolve)=>{
+//         setTimeout(()=>{
+//             console.log("Food is delivered");
+//             console.log("eating")
+//             resolve();
+//         },1000);
+//     });
+// }
+// orderfood()
+// .then(()=>preparing())
+// .then(()=>delivery())
+
+// async-await
+function orderfood(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            console.log("ordered");
+            resolve()
+        },2000);
+
+    });
+}
+function preparing(){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            console.log("Restraudant is preparing");
+            resolve();
+        },1000);
+    });
+}
+function delivery(){
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            console.log("Food is delivered");
+            console.log("eating")
+            resolve();
+        },1000);
+    });
+}
+async function processOrder(){
+    await orderfood();
+    await preparing();
+    await delivery();
+}
+processOrder();
