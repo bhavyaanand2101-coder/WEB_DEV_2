@@ -206,35 +206,42 @@
 // .then(()=>delivery())
 
 // async-await
-function orderfood(){
-    return new Promise((resolve,reject)=>{
-        setTimeout(()=>{
-            console.log("ordered");
-            resolve()
-        },2000);
+// function orderfood(){
+//     return new Promise((resolve,reject)=>{
+//         setTimeout(()=>{
+//             console.log("ordered");
+//             resolve()
+//         },2000);
 
-    });
+//     });
+// }
+// function preparing(){
+//     return new Promise((resolve)=>{
+//         setTimeout(()=>{
+//             console.log("Restraudant is preparing");
+//             resolve();
+//         },1000);
+//     });
+// }
+// function delivery(){
+//     return new Promise((resolve)=>{
+//         setTimeout(()=>{
+//             console.log("Food is delivered");
+//             console.log("eating")
+//             resolve();
+//         },1000);
+//     });
+// }
+// async function processOrder(){
+//     await orderfood();
+//     await preparing();
+//     await delivery();
+// }
+// processOrder();
+
+
+// Async Code- 
+async function getHelloMessage(){
+    return"Hello";
 }
-function preparing(){
-    return new Promise((resolve)=>{
-        setTimeout(()=>{
-            console.log("Restraudant is preparing");
-            resolve();
-        },1000);
-    });
-}
-function delivery(){
-    return new Promise((resolve)=>{
-        setTimeout(()=>{
-            console.log("Food is delivered");
-            console.log("eating")
-            resolve();
-        },1000);
-    });
-}
-async function processOrder(){
-    await orderfood();
-    await preparing();
-    await delivery();
-}
-processOrder();
+getHelloMessage().then(message => console.log(message));
