@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2 - Async Weather Tracker</title>
+    <style>
+        body {
+            background: linear-gradient(#1e3a8a, #0f172a); 
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { width: 100%; max-width: 800px; }
+        
+        .card {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        input { padding: 10px; width: 70%; border-radius: 5px; border: 1px solid #ccc; }
+        button { 
+            padding: 10px; 
+            background: #e67e22; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+
+        .hist-btn {
+            background: #e67e22;
+            color: white;
+            border: none;
+            margin: 5px 5px 0 0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .row b { color: #555; }
+
+        .console {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 120px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Using <u> for underline -->
+        <h1 style="text-align: center;"> <u>Async Weather Tracker</u></h1>
+
+        <div class="grid">
+            <!-- LEFT COLUMN -->
+            <div class="card">
+                <h3>Search City</h3>
+                <input type="text" id="cityInput" placeholder="Enter city name...">
+                <button onclick="getWeatherData()">Search</button>
+                
+                <hr> <!-- Horizontal line -->
+                <h4>Quick History</h4>
+                <div id="historyList"></div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="card">
+                <h3>Weather Info</h3>
+                <div id="weatherInfo">
+                    <p style="text-align: center; color: #999;"><i>Search a city to see details</i></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM CONSOLE -->
+        <div class="card">
+            <h3>Console - Event Loop Analysis</h3>
+            <hr>
+            <div id="logBox" class="console"></div>
+        </div>
+    </div>
+
+    <script>
+        // STEP 1: Predefined Data (Instead of API)
+        var weatherDatabase = {
+            "delhi": { name: "Delhi", temp: "32°C", humidity: "45%", wind: "8 km/h" },
+            "mumbai": { name: "Mumbai", temp: "30°C", humidity: "82%", wind: "15 km/h" },
+            "kanpur": { name: "Kanpur", temp: "34°C", humidity: "38%", wind: "5 km/h" },
+            "chandigarh": { name: "Chandigarh", temp: "28°C", humidity: "50%", wind: "10 km/h" }
+        };
+
+        // Function to add logs to our console box
+        function addLog(text) {
+            var logBox = document.getElementById('logBox');
+            logBox.innerHTML = logBox.innerHTML + "<div> > " + text + "</div>";
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        // The Main Async function
+        async function getWeatherData(historyCity) {
+            var inputCity = document.getElementById('cityInput').value;
+            var city = (historyCity || inputCity).toLowerCase().trim();
+            var infoDiv = document.getElementById('weatherInfo');
+            
+            if (city == "") {
+                alert("Please type a city name!");
+                return;
+            }
+
+            document.getElementById('logBox').innerHTML = ""; // Clear console
+
+            // --- EVENT LOOP DEMO ---
+            addLog("1. Sync Start: Checking local database...");
+
+            // Macrotask
+            setTimeout(function() {
+                addLog("4. Macrotask: setTimeout finished");
+            }, 0);
+
+            // Microtask
+            Promise.resolve().then(function() {
+                addLog("3. Microtask: Promise resolved");
+            });
+
+            addLog("2. Sync: Processing " + city);
+
+            try {
+                // Simulating an Async delay (like a real network)
+                await new Promise(resolve => setTimeout(resolve, 600));
+
+                var data = weatherDatabase[city];
+
+                if (data) {
+                    // Update UI if city exists
+                    infoDiv.innerHTML = `
+                        <div class="row"><b>City Name</b> <span>${data.name}</span></div>
+                        <div class="row"><b>Temperature</b> <span>${data.temp}</span></div>
+                        <div class="row"><b>Humidity</b> <span>${data.humidity}</span></div>
+                        <div class="row"><b>Wind Speed</b> <span>${data.wind}</span></div>
+                    `;
+                    saveHistory(data.name);
+                    addLog("5. Async: Data retrieved from local store");
+                } else {
+                    throw new Error("City not found in local data");
+                }
+
+            } catch (err) {
+                infoDiv.innerHTML = "<p style='color:red; text-align:center;'><b>Error:</b> " + err.message + "</p>";
+                addLog("Error: " + err.message);
+            }
+
+            addLog("6. Sync: End of function");
+        }
+
+        // Save history to Local Storage
+        function saveHistory(city) {
+            var list = JSON.parse(localStorage.getItem('mySavedCities')) || [];
+            if (list.indexOf(city) === -1) {
+                list.push(city);
+                localStorage.setItem('mySavedCities', JSON.stringify(list));
+                showHistory();
+            }
+        }
+
+        // Show history buttons
+        function showHistory() {
+            // Default list includes your requested cities
+            var list = JSON.parse(localStorage.getItem('mySavedCities')) || ["Delhi", "Mumbai", "Kanpur", "Chandigarh"];
+            var historyDiv = document.getElementById('historyList');
+            historyDiv.innerHTML = "";
+
+            for (var i = 0; i < list.length; i++) {
+                var btn = document.createElement('button');
+                btn.className = "hist-btn";
+                btn.innerText = list[i];
+                
+                // Wrap in a function to capture current name correctly
+                (function(name) {
+                    btn.onclick = function() { getWeatherData(name); };
+                })(list[i]);
+                
+                historyDiv.appendChild(btn);
+            }
+        }
+
+        window.onload = showHistory;
+    </script>
+</body>
+</html>

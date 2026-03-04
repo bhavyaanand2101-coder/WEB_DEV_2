@@ -1,0 +1,208 @@
+<!-- https://home.openweathermap.org/api_keys -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 2 - Async Weather Tracker</title>
+    <style>
+        /* KEEPING YOUR EXACT UI STYLE */
+        body {
+            background: linear-gradient(#1e3a8a, #0f172a); 
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { width: 100%; max-width: 800px; }
+        
+        .card {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        input { padding: 10px; width: 70%; border-radius: 5px; border: 1px solid #ccc; }
+        button { 
+            padding: 10px; 
+            background: #e67e22; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+
+        .hist-btn {
+            background: #e67e22;
+            color: white;
+            border: none;
+            margin: 5px 5px 0 0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .row b { color: #555; }
+
+        .console {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 120px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Added <u> for underline effect -->
+        <h1 style="text-align: center;">☀️ <u>Async Weather Tracker</u></h1>
+
+        <div class="grid">
+            <!-- LEFT COLUMN -->
+            <div class="card">
+                <h3>Search City</h3>
+                <input type="text" id="cityInput" placeholder="Enter city name...">
+                <button onclick="getWeatherData()">Search</button>
+                
+                <hr> <!-- Horizontal line tag -->
+                <h4>Search History</h4>
+                <div id="historyList"></div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="card">
+                <h3>Weather Info</h3>
+                <div id="weatherInfo">
+                    <p style="text-align: center; color: #999;"><i>Search a city to see details</i></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM CONSOLE -->
+        <div class="card">
+            <h3>Console - Event Loop Analysis</h3>
+            <hr>
+            <div id="logBox" class="console"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simple function to add messages to our console box
+        function addLog(text) {
+            var logBox = document.getElementById('logBox');
+            logBox.innerHTML = logBox.innerHTML + "<div> > " + text + "</div>";
+        }
+
+        // The Main Async function for fetching weather
+        async function getWeatherData(historyCity) {
+            // Check if we clicked a history button or used the input box
+            var city = historyCity || document.getElementById('cityInput').value;
+            var infoDiv = document.getElementById('weatherInfo');
+            
+            if (city == "") {
+                alert("Please type a city name!");
+                return;
+            }
+
+            document.getElementById('logBox').innerHTML = ""; // Clear console
+
+            // --- DEMONSTRATING EVENT LOOP ---
+            addLog("1. Sync Start: Checking the city...");
+
+            // Macrotask
+            setTimeout(function() {
+                addLog("4. Macrotask: setTimeout (End of Queue)");
+            }, 0);
+
+            // Microtask
+            Promise.resolve().then(function() {
+                addLog("3. Microtask: Promise handled");
+            });
+
+            addLog("2. Sync: Calling API for " + city);
+
+            try {
+                // YOUR API KEY ADDED HERE
+                var myKey = "919d271dac1bb5318b47f53499249864";
+                var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + myKey;
+                
+                // Fetch the data
+                var response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error("City not found in database");
+                }
+
+                var data = await response.json();
+
+                // Displaying results using basic HTML structure
+                infoDiv.innerHTML = `
+                    <div class="row"><b>City Name</b> <span>${data.name}</span></div>
+                    <div class="row"><b>Temperature</b> <span>${data.main.temp}°C</span></div>
+                    <div class="row"><b>Humidity</b> <span>${data.main.humidity}%</span></div>
+                    <div class="row"><b>Wind Speed</b> <span>${data.wind.speed} m/s</span></div>
+                `;
+
+                saveHistory(data.name);
+                addLog("5. Async: Weather data arrived!");
+
+            } catch (err) {
+                infoDiv.innerHTML = "<p style='color:red; text-align:center;'><b>Error:</b> " + err.message + "</p>";
+                addLog("Error: " + err.message);
+            }
+
+            addLog("6. Sync: Function finished");
+        }
+
+        // Save history to Browser Local Storage
+        function saveHistory(city) {
+            var list = JSON.parse(localStorage.getItem('savedCities')) || [];
+            
+            // Check if city is already in history to avoid duplicates
+            if (list.indexOf(city) === -1) {
+                list.push(city);
+                localStorage.setItem('savedCities', JSON.stringify(list));
+                showHistory();
+            }
+        }
+
+        // Show history as clickable buttons
+        function showHistory() {
+            // Default cities if storage is empty
+            var list = JSON.parse(localStorage.getItem('savedCities')) || ["Delhi", "Mumbai", "Indore", "London"];
+            var historyDiv = document.getElementById('historyList');
+            historyDiv.innerHTML = "";
+
+            // Standard for loop
+            for (var i = 0; i < list.length; i++) {
+                var btn = document.createElement('button');
+                btn.className = "hist-btn";
+                btn.innerText = list[i];
+                
+                // When button is clicked, search that city
+                let cityName = list[i];
+                btn.onclick = function() {
+                    getWeatherData(cityName);
+                };
+                historyDiv.appendChild(btn);
+            }
+        }
+
+        // Run this when the browser finishes loading
+        window.onload = showHistory;
+
+    </script>
+</body>
+</html>
