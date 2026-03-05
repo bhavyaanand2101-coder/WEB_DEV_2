@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chintu Shop</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        #root { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        img { width: 100%; height: 300px; object-fit: contain; }
+        #root > div { 
+            padding: 10px 15px; border-radius: 10px; 
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 15px;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        button { padding: 10px 15px; margin: 5px; background-color: yellow; border: none; border-radius: 10px; cursor: pointer; }
+        button:hover { background-color: orange; }
+        .add-btn { background-color: #2ecc71; color: white; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+        <h2>Welcome to Chintu ka Page</h2>
+        <a href="cart.html"><button style="background-color: lightblue;">View Cart 🛒</button></a>
+    </div>
+    <select
+
+    <div id="root"></div>
+
+    <script>
+        const api = "https://fakestoreapi.com/products";
+        // Initialize cart from localStorage
+        let cartArr = JSON.parse(localStorage.getItem("cart")) || [];
+
+        fetch(api)
+            .then((res) => res.json())
+            .then((data) => {
+                displayProducts(data);
+            });
+
+        function displayProducts(arr) {
+            arr.forEach((el) => {
+                const box = document.createElement("div");
+
+                const image = document.createElement("img");
+                image.src = el.image;
+
+                const title = document.createElement("h3");
+                title.innerText = el.title.substring(0, 20) + "...";
+
+                const price = document.createElement("button");
+                price.innerText = `Price: $${el.price}`;
+
+                // CREATE ADD TO CART BUTTON
+                const addToCartBtn = document.createElement("button");
+                addToCartBtn.innerText = "Add to Cart";
+                addToCartBtn.className = "add-btn";
+
+                addToCartBtn.addEventListener("click", function() {
+                    cartArr.push(el);
+                    localStorage.setItem("cart", JSON.stringify(cartArr));
+                    alert("Product added to cart!");
+                });
+
+                // FIXED: Now we append addToCartBtn to the box
+                box.append(image, title, price, addToCartBtn);
+                document.querySelector("#root").append(box);
+            });
+        }
+    </script>
+</body>
+</html>
+
+<!-- Sort, total cart price, search -->

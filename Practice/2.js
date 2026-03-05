@@ -241,7 +241,24 @@
 
 
 // Async Code- 
-async function getHelloMessage(){
-    return"Hello";
+// async function getHelloMessage(){
+//     return"Hello";
+// }
+// getHelloMessage().then(message => console.log(message));
+
+// try and catch
+async function fetchData(){
+    try{
+        const response= await
+        fetch("https:testapi.com");
+        if(!response.ok){
+            throw new Error("Network response was not ok");
+        }
+        const data= await response.json();
+        console.log(data);
+    }catch(error){
+        console.error(error);
+    }
 }
-getHelloMessage().then(message => console.log(message));
+fetchData();
+

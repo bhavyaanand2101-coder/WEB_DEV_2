@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chintu Cart</title>
+    <style>
+        #root { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        img { width: 100%; height: 250px; object-fit: contain; }
+        #root > div { padding: 15px; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.2); }
+        .remove-btn { background-color: #ff4d4d; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <a href="1.html">← Back to Products</a>
+    <h2>Your Shopping Cart</h2>
+
+    <div id="root"></div>
+
+    <script>
+        // Step 1: Get the data from local storage
+        let cartData = JSON.parse(localStorage.getItem("cart")) || [];
+        let root = document.querySelector("#root");
+
+        function displayCart(arr) {
+            root.innerHTML = ""; // Clear the page before re-rendering
+
+            if (arr.length === 0) {
+                root.innerHTML = "<h3>Your cart is empty.</h3>";
+                return;
+            }
+
+            arr.forEach((el, index) => {
+                const box = document.createElement("div");
+
+                const image = document.createElement("img");
+                image.src = el.image;
+
+                const title = document.createElement("h3");
+                title.innerText = el.title;
+
+                const price = document.createElement("p");
+                price.innerText = `Price: $${el.price}`;
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.innerText = "Remove from Cart";
+                deleteBtn.className = "remove-btn";
+
+                // Fix: Use 'index' to remove the correct item
+                deleteBtn.addEventListener("click", function() {
+                    arr.splice(index, 1); 
+                    localStorage.setItem("cart", JSON.stringify(arr));
+                    displayCart(arr); // Refresh the UI
+                    alert("Item removed");
+                });
+
+                box.append(image, title, price, deleteBtn);
+                root.append(box);
+            });
+        }
+
+        // Call the function initially
+        displayCart(cartData);
+    </script>
+</body>
+</html>
