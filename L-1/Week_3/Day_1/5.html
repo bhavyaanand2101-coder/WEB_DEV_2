@@ -13,6 +13,19 @@
 </form>
 </body>
 <script>
+    const validUser = 'admin';
+const validPass = 'secret';
+
+document.querySelector('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const { username, password } = e.target;
+  if (username.value === validUser && password.value === validPass) {
+    alert('Welcome!');
+    // maybe window.location.href = 'dashboard.html';
+  } else {
+    alert('Invalid credentials');
+  }
+});
 document.querySelector("form").addEventListener("submit", function(event){
     event.preventDefault();
     let username = event.target.username.value;
