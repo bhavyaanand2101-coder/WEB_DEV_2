@@ -263,7 +263,31 @@
 // fetchData();
 
 
-function add(a,b,c){
-    return a+b+c;
-}
-console.log(add(1,2,3));
+// function add(a,b,c){
+//     return a+b+c;
+// }
+// console.log(add(1,2,3));
+
+// 1. Create the button element
+// const button = document.createElement('button');
+
+// // 2. Set the button's text content
+// button.innerText = 'Click Me'; // You can also use button.textContent
+
+// // 3. Set the button type to "button" to prevent default form submission behavior
+// // This is a best practice if your button is not part of a form
+// button.type = 'button';
+
+// // 4. Add an event listener to handle clicks
+// button.addEventListener('click',function(){
+//     alert('Button clicked!');
+// });
+
+// // 5. Append the button to the HTML document (e.g., the body)
+// document.body.appendChild(button);
+
+setTimeout(function(){
+ console.log("Hello");
+},1000);
+
+

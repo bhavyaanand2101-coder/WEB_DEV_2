@@ -150,3 +150,16 @@
 
 </body>
 </html>
+
+<!-- imp topics  -->
+dom vs HTML 
+lecture 2 and 3 mai difference 
+     inner text, inner html, text content difference with eg 
+      Dom modification, 10 no ka sawal  form banane ko de ge like "to do list"   
+       add event listner or remove event listner   
+       event bubbling and capturing 
+        role of call stack with execution context 
+timers pe out put based pucha jayega -->
+  call back promise and promise chaining isski puri life cycle  
+   output based q event loop 10 m q 
+    local, session , cookie storage difference,
