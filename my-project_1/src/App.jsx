@@ -121,3 +121,48 @@
 // }
 
 // 7. 
+
+// const person ={
+//     name: "bhavya",
+//     theme:{
+//         backgroundColor: "black",
+//         color: "pink"
+//     }
+// };
+
+// export default function TodoList() {
+//   return (
+//     <div style={person.theme}>
+//       <h1>{person.name}'s Todo List</h1>
+//       <img 
+//       className= "Bhanu"
+//       src="https://i.pravatar.cc/150?img=3"
+//       alt="Avatar"
+//       />
+//       <ul>
+//         <li>Task 1</li>
+//         <li>Task 2</li>
+//         <li>Task 3</li>
+//       </ul>
+//     </div>
+//   );
+// }
+
+// 8.
+
+// export default function Bio() {
+//   return(
+//     <div>
+//       <div>
+//         <h1>Welcome to my page</h1>
+//       </div>
+//       <p className="summary">
+//         I am a Full Stack Web Developer
+//         <br /><br />
+//         <b>And <i>pics</i></b> Hello
+//       </p>
+//     </div>
+//   )
+// }
+
+
