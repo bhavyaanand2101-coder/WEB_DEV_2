@@ -166,3 +166,35 @@
 // }
 
 
+// 9. 
+// function App(){
+//   const app = document.createElement("div")
+//   app.className="App"
+//   const h1= document.createElement("h1")
+//   const h2= document.createElement("h2")
+//   h1.textContent="Hello, World!"
+//   h2.textContent="Welcome to my page"
+//   app.append(h1,h2)
+//   return app
+// }
+// document.body.append(App())
+
+// export default function App() {
+//   return (
+//     <div className="App">
+//       <h1>Hello, World!</h1>
+//       <h2>Welcome to my page</h2>
+//     </div>
+//   );
+// }
+
+// 10, 
+
+export default function App() {
+  return (
+    <div>
+      <h1>Hello, World!</h1>
+      <h2>Welcome to my page</h2>
+    </div>
+  );
+}
