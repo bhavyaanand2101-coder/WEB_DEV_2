@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  background: #02030a;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* GRID BACKGROUND */
+body::after {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(#00f5d420 1px, transparent 1px),
+    linear-gradient(90deg, #00f5d420 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -2;
+}
+
+/* NEON GLOW */
+body::before {
+  content: "";
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  background: #ff00ff;
+  filter: blur(200px);
+  top: -150px;
+  left: -150px;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+/* CONTAINER */
+.container {
+  width: 90%;
+  max-width: 950px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* GLITCH TITLE */
+.title {
+  font-size: 38px;
+  letter-spacing: 3px;
+  position: relative;
+}
+
+.title span {
+  color: #00f5d4;
+  text-shadow: 0 0 10px #00f5d4, 0 0 25px #00f5d4;
+}
+
+/* GLITCH EFFECT */
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.glitch::before {
+  color: #ff00ff;
+  animation: glitchTop 2s infinite;
+}
+
+.glitch::after {
+  color: #00f5d4;
+  animation: glitchBottom 2s infinite;
+}
+
+@keyframes glitchTop {
+  0% { clip-path: inset(0 0 80% 0); transform: translate(-2px, -2px); }
+  50% { clip-path: inset(10% 0 60% 0); transform: translate(2px, 2px); }
+  100% { clip-path: inset(0 0 80% 0); transform: translate(-2px, -2px); }
+}
+
+@keyframes glitchBottom {
+  0% { clip-path: inset(60% 0 0 0); transform: translate(2px, 2px); }
+  50% { clip-path: inset(40% 0 20% 0); transform: translate(-2px, -2px); }
+  100% { clip-path: inset(60% 0 0 0); transform: translate(2px, 2px); }
+}
+
+/* FORM */
+.form {
+  display: flex;
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.form input {
+  flex: 1;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #00f5d4;
+  color: white;
+  border-radius: 6px;
+}
+
+.form button {
+  background: linear-gradient(45deg, #ff00ff, #00f5d4);
+  border: none;
+  padding: 12px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  color: black;
+  transition: 0.3s;
+}
+
+.form button:hover {
+  box-shadow: 0 0 20px #ff00ff;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  gap: 15px;
+}
+
+/* CYBER CARDS */
+.card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #00f5d4;
+  text-align: center;
+  position: relative;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00f5d4 inset;
+  opacity: 0.4;
+}
+
+.card p {
+  font-size: 28px;
+  color: #00f5d4;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+th {
+  color: #00f5d4;
+  border-bottom: 1px solid #00f5d4;
+  padding: 12px;
+}
+
+td {
+  padding: 12px;
+}
+
+/* ROW HOVER */
+tr:hover {
+  background: rgba(0, 245, 212, 0.1);
+}
+
+/* INPUT */
+input[type="number"] {
+  width: 60px;
+  background: black;
+  border: 1px solid #00f5d4;
+  color: white;
+  padding: 5px;
+}
+
+/* STATUS */
+.pass {
+  color: #00ff88;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+.fail {
+  color: #ff004c;
+  text-shadow: 0 0 10px #ff004c;
+}
+
+/* SCANLINE EFFECT */
+body::after {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 3px
+  );
+  pointer-events: none;
+  z-index: 999;
+}
