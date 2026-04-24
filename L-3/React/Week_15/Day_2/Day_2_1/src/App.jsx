@@ -1,14 +1,12 @@
-import Nav from "./Components/Nav";
+import "./styles.css";
+import NavBar from "./Components/NavBar";
 import AllRoutes from "./Components/AllRoutes";
 
-function App() {
+export default function App() {
   return (
-    <div>
-      <h1>Welcome to my page</h1>
-      <Nav />
+    <div className="App">
+      <NavBar />
       <AllRoutes />
     </div>
   );
 }
-
-export default App;

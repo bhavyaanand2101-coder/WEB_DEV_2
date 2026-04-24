@@ -14,6 +14,7 @@ export default function AllRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="login/" element={<Login />} />
       <Route path="/users" element={<Users />} />
+      <Route path="*" element={<h1>404 Not Found</h1>} />
     </Routes>
   );
 }

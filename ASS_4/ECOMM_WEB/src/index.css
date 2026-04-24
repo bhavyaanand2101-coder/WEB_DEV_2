@@ -1,3 +1,31 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  transition: all 0.3s ease;
+}
+
+/* LIGHT THEME */
+.light {
+  background-color: #f3f4f6;
+  color: #111;
+}
+
+/* DARK THEME */
+.dark {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+/* COMMON UI */
+.card {
+  background: white;
+  color: black;
+  padding: 12px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.dark .card {
+  background: #1e293b;
+  color: white;
+}

@@ -4,67 +4,40 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [search, setSearch] = useState("");
+  const [dark, setDark] = useState(false);
+  const [sort, setSort] = useState("none");
+  const [category, setCategory] = useState("all");
 
-  // ADD TO CART (full product preserved)
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const exists = prev.find((item) => item.id === product.id);
-
-      if (exists) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, qty: item.qty + 1 }
-            : item
-        );
-      }
-
-      return [
-        ...prev,
-        {
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          image: product.image,
-          qty: 1,
-        },
-      ];
-    });
+  const addToCart = (p) => {
+    const clean = {
+      id: p.id,
+      title: p.title,
+      price: Number(p.price),
+      image: p.image,
+      category: p.category
+    };
+    setCart(prev => [...prev, clean]);
   };
 
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const increaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, qty: item.qty + 1 } : item
-      )
-    );
-  };
-
-  const decreaseQty = (id) => {
-    setCart((prev) =>
-      prev
-        .map((item) =>
-          item.id === id
-            ? { ...item, qty: item.qty - 1 }
-            : item
-        )
-        .filter((item) => item.qty > 0)
-    );
+    setCart(prev => prev.filter(i => i.id !== id));
   };
 
   return (
-    <AppContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        increaseQty,
-        decreaseQty,
-      }}
-    >
+    <AppContext.Provider value={{
+      cart,
+      addToCart,
+      removeFromCart,
+      search,
+      setSearch,
+      dark,
+      setDark,
+      sort,
+      setSort,
+      category,
+      setCategory
+    }}>
       {children}
     </AppContext.Provider>
   );

@@ -6,58 +6,22 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email,setEmail] = useState("");
+  const [pass,setPass] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault(); // IMPORTANT FIX
-
-    try {
-      await login(email, password);
-
-      // redirect after login
-      navigate("/");
-    } catch (err) {
-      alert("Login Failed: " + err.message);
-    }
+  const handle = () => {
+    login(email, pass);
+    navigate("/");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div style={{ padding: 20 }}>
+      <h2>Login</h2>
 
-      <form
-        onSubmit={handleLogin}
-        className="bg-white p-6 rounded shadow w-80"
-      >
+      <input placeholder="Email" onChange={e=>setEmail(e.target.value)} /><br/>
+      <input type="password" placeholder="Password" onChange={e=>setPass(e.target.value)} /><br/>
 
-        <h2 className="text-xl font-bold mb-4">
-          Login
-        </h2>
-
-        <input
-          className="border w-full p-2 mb-3"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <input
-          type="password"
-          className="border w-full p-2 mb-3"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button
-          type="submit"
-          className="w-full bg-black text-white py-2"
-        >
-          Login
-        </button>
-
-      </form>
-
+      <button onClick={handle}>Login</button>
     </div>
   );
 }

@@ -1,33 +1,37 @@
 import { Link } from "react-router-dom";
+import { useApp } from "../context/AppContext";
 import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
+  const { cart, search, setSearch, dark, setDark } = useApp();
   const { user, logout } = useAuth();
 
   return (
-    <div className="bg-black text-white p-4 flex justify-between">
+    <div style={{
+      display: "flex",
+      justifyContent: "space-between",
+      padding: 10,
+      background: dark ? "#1e293b" : "#fff"
+    }}>
+      <Link to="/">Shop</Link>
 
-      <div className="flex gap-4">
-        <Link to="/home">Home</Link>
-        <Link to="/cart">Cart</Link>
-      </div>
+      <input
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
 
-      <div className="flex gap-4">
+      <button onClick={() => setDark(!dark)}>
+        {dark ? "Light" : "Dark"}
+      </button>
 
-        {!user ? (
-          <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Signup</Link>
-          </>
-        ) : (
-          <>
-            <span>{user.email}</span>
-            <button onClick={logout}>Logout</button>
-          </>
-        )}
+      <Link to="/cart">Cart ({cart.length})</Link>
 
-      </div>
-
+      {user ? (
+        <button onClick={logout}>Logout</button>
+      ) : (
+        <Link to="/login">Login</Link>
+      )}
     </div>
   );
 }

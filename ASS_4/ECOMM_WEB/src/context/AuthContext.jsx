@@ -1,62 +1,19 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-} from "firebase/auth";
-
-import { auth } from "../firebase";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  // SIGNUP
-  const signup = async (email, password, role = "user") => {
-    const res = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    setUser({ ...res.user, role });
+  const login = (email, pass) => {
+    if (email && pass) setUser({ email });
   };
 
-  // LOGIN
-  const login = async (email, password) => {
-    const res = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    setUser({ ...res.user, role: "user" });
-  };
-
-  // LOGOUT
-  const logout = () => {
-    signOut(auth);
-    setUser(null);
-  };
-
-  // KEEP USER LOGGED IN
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-
-    return () => unsub();
-  }, []);
+  const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider
-      value={{ user, signup, login, logout }}
-    >
-      {!loading && children}
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -1,61 +1,27 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-
-import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
+import { useApp } from "./context/AppContext";
 
 export default function App() {
   const { user } = useAuth();
+  const { dark } = useApp();
 
   return (
-    <div className="min-h-screen bg-gray-100">
-
-      {/* Navbar only when logged in */}
-      {user && <Navbar />}
+    <div style={{
+      background: dark ? "#0f172a" : "#f5f5f5",
+      color: dark ? "white" : "black",
+      minHeight: "100vh"
+    }}>
+      <Navbar />
 
       <Routes>
-
-        {/* 🔥 DEFAULT ROUTE → LOGIN FIRST */}
-        <Route
-          path="/"
-          element={
-            user ? <Navigate to="/home" /> : <Login />
-          }
-        />
-
-        {/* HOME */}
-        <Route
-          path="/home"
-          element={
-            user ? <Home /> : <Navigate to="/" />
-          }
-        />
-
-        {/* AUTH */}
+        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/cart" element={user ? <Cart /> : <Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-
-        {/* PROTECTED CART */}
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* fallback */}
-        <Route
-          path="*"
-          element={<Navigate to="/" />}
-        />
-
       </Routes>
     </div>
   );
