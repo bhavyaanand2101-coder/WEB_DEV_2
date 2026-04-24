@@ -4,34 +4,30 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const { cart, search, setSearch, dark, setDark } = useApp();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
 
   return (
-    <div style={{
-      display: "flex",
-      justifyContent: "space-between",
-      padding: 10,
-      background: dark ? "#1e293b" : "#fff"
-    }}>
-      <Link to="/">Shop</Link>
-
-      <input
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        placeholder="Search..."
-      />
-
-      <button onClick={() => setDark(!dark)}>
-        {dark ? "Light" : "Dark"}
-      </button>
-
-      <Link to="/cart">Cart ({cart.length})</Link>
-
-      {user ? (
-        <button onClick={logout}>Logout</button>
-      ) : (
-        <Link to="/login">Login</Link>
-      )}
-    </div>
+    <nav className="navbar">
+      <Link to="/" className="logo">SHOPMY</Link>
+      <div className="search-container">
+        <input 
+          className="search-input"
+          placeholder="Search products..." 
+          value={search} 
+          onChange={e => setSearch(e.target.value)} 
+        />
+      </div>
+      <div className="nav-btns">
+        <button className="btn btn-ghost" onClick={() => setDark(!dark)}>
+          {dark ? "☀️" : "🌙"}
+        </button>
+        <Link to="/cart" className="btn btn-ghost" style={{textDecoration: 'none'}}>
+          🛒 Cart ({cart.length})
+        </Link>
+        <button onClick={logout} className="btn btn-primary" style={{width: 'auto'}}>
+          Logout
+        </button>
+      </div>
+    </nav>
   );
 }

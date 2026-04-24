@@ -4,12 +4,13 @@ export default function ProductCard({ product }) {
   const { addToCart } = useApp();
 
   return (
-    <div style={{ border: "1px solid gray", padding: 10 }}>
-      <img src={product.image} style={{ height: 120 }} />
+    <div className="product-card">
+      <div className="img-wrapper">
+        <img src={product.image} alt={product.title} />
+      </div>
       <h4>{product.title}</h4>
-      <p>₹ {product.price}</p>
-
-      <button onClick={() => addToCart(product)}>
+      <p className="price">₹{product.price}</p>
+      <button className="btn btn-primary" onClick={() => addToCart(product)}>
         Add to Cart
       </button>
     </div>

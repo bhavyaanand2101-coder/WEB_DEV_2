@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCXTIb50YM7RmGH-UhB10m_XSSTyslUy54",
@@ -8,19 +7,9 @@ const firebaseConfig = {
   projectId: "ecomm-app-6c9d6",
   storageBucket: "ecomm-app-6c9d6.firebasestorage.app",
   messagingSenderId: "474601028654",
-  appId: "1:474601028654:web:21e58d8f608354be2bf3bf",
-  measurementId: "G-E5WP065MYC",
+  appId: "1:474601028654:web:21e58d8f608354be2bf3bf"
 };
 
 const app = initializeApp(firebaseConfig);
-
-// 🔐 AUTH EXPORT
 export const auth = getAuth(app);
-
-// 🌐 GOOGLE PROVIDER EXPORT (THIS WAS MISSING)
 export const googleProvider = new GoogleAuthProvider();
-
-// 📊 SAFE ANALYTICS
-isSupported().then((yes) => {
-  if (yes) getAnalytics(app);
-});
