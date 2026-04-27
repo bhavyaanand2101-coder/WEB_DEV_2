@@ -73,50 +73,149 @@
 // export default Timer;
 
 
-import React from "react";
+// import React from "react";
 
-class Timer extends React.Component {
-  constructor() {
-    super();
-    this.state = { count: 0 };
-  }
+// class Timer extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = { count: 0 };
+//   }
 
-  componentDidMount() {
-    // Start the timer when the component loads
-    this.startTimer();
-  }
+//   componentDidMount() {
+//     // Start the timer when the component loads
+//     this.startTimer();
+//   }
 
-  // Create a separate method to start the timer
-  startTimer = () => {
-    // Check if a timer is already running to avoid duplicates
-    if (!this.timer) {
-      this.timer = setInterval(() => {
-        this.setState({ count: this.state.count + 1 });
-      }, 1000);
-    }
-  }
+//   // Create a separate method to start the timer
+//   startTimer = () => {
+//     // Check if a timer is already running to avoid duplicates
+//     if (!this.timer) {
+//       this.timer = setInterval(() => {
+//         this.setState({ count: this.state.count + 1 });
+//       }, 1000);
+//     }
+//   }
 
-  // Method to stop the timer
-  stopTimer = () => {
-    clearInterval(this.timer);
-    this.timer = null; // Clear the reference
-    console.log("Timer Stopped");
-  };
+//   // Method to stop the timer
+//   stopTimer = () => {
+//     clearInterval(this.timer);
+//     this.timer = null; // Clear the reference
+//     console.log("Timer Stopped");
+//   };
 
-  componentWillUnmount() {
-    this.stopTimer(); // Always clean up when component is destroyed
-  }
+//   componentWillUnmount() {
+//     this.stopTimer(); // Always clean up when component is destroyed
+//   }
 
-  render() {
-    return (
-      <div>
-        <h2>Timer: {this.state.count} seconds</h2>
-        {/* Add a button to call the stopTimer method */}
-        <button onClick={this.stopTimer}>Stop Timer</button>
-        <button onClick={this.startTimer}>Start Timer</button>
-      </div>
-    );
-  }
+//   render() {
+//     return (
+//       <div>
+//         <h2>Timer: {this.state.count} seconds</h2>
+//         {/* Add a button to call the stopTimer method */}
+//         <button onClick={this.stopTimer}>Stop Timer</button>
+//         <button onClick={this.startTimer}>Start Timer</button>
+//       </div>
+//     );
+//   }
+// }
+
+// export default Timer;
+
+// import React from "react";
+// function AlertBox(){
+//   const alertStyle = {
+//     padding: "20px",
+//     backgroundColor: "red",
+//     color: "white",
+//     fontWeight: "700",
+//     textAlign: "center"
+//   };
+//   return(<div style={alertStyle}>
+//     Alert is htere
+//   </div>
+//   );
+// }
+// export default AlertBox;
+
+
+// src/Button.jsx:
+
+// import React from 'react';
+// // 1. Import the CSS module file
+// import styles from './Button.module.css';
+
+// function Button() {
+//   // 2. Apply the class using the imported styles object
+//   return (
+//     <button className={styles.primaryButton}>
+//       Click Me
+//     </button>
+//   );
+// }
+
+// export default Button;
+
+// import React from 'react';
+// import styled from '@emotion/styled';
+
+// // 1. Define your styled components OUTSIDE the function component.
+// // This prevents React from re-creating the component on every render, 
+// // which is what causes the "Invalid Hook Call" error.
+// const MyButton = styled.button`
+//   padding: 10px 20px;
+//   background-color: #007bff; /* A nice dodger blue */
+//   color: white;
+//   border: none;
+//   border-radius: 5px;
+//   font-size: 16px;
+//   font-weight: bold;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+
+//   /* This handles the hover state */
+//   &:hover {
+//     background-color: #0056b3;
+//   }
+
+//   /* This handles the click effect */
+//   &:active {
+//     transform: scale(0.98);
+//   }
+// `;
+
+// // 2. Your main App component
+// export default function App() {
+//   return (
+//     <div style={{ 
+//       display: 'flex', 
+//       justifyContent: 'center', 
+//       alignItems: 'center', 
+//       height: '100vh',
+//       fontFamily: 'sans-serif' 
+//     }}>
+//       <div style={{ textAlign: 'center' }}>
+//         <h1>Emotion Styled Component</h1>
+//         <p>If you see the blue button below, it works!</p>
+        
+//         {/* 3. Use the component like a regular tag */}
+//         <MyButton onClick={() => alert('Button Clicked!')}>
+//           Click Me
+//         </MyButton>
+//       </div>
+//     </div>
+//   );
+// }
+
+import React from 'react';
+
+export default function App() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-4xl font-bold mb-4">Tailwind CSS in React</h1>
+      <p className="text-gray-700 mb-6">This is a simple example of using Tailwind CSS with React.</p>
+      <button className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">
+        Click Me
+      </button>
+    </div>
+  );
 }
-
-export default Timer;

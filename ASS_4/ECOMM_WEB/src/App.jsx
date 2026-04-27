@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 
+
 export default function App() {
   // Get dark mode state from app context
   const { dark } = useApp();
