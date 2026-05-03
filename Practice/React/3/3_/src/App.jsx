@@ -208,14 +208,45 @@
 
 import React from 'react';
 
+// export default function App() {
+//   return (
+//     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+//       <h1 className="text-4xl font-bold mb-4">Tailwind CSS in React</h1>
+//       <p className="text-gray-700 mb-6">This is a simple example of using Tailwind CSS with React.</p>
+//       <button className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">
+//         Click Me
+//       </button>
+//     </div>
+//   );
+// }
+
+
+// import EchoInput from './EchoInput.jsx';
+// export default function App() {  
+//   return (
+//     <EchoInput />
+//   );
+// } 
+
+
+import {useState, useEffect} from 'react';
 export default function App() {
+  const [count, setCount]= useState(0);
+
+  useEffect(()=>{
+    console.log("run");
+    }
+  )
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-4">Tailwind CSS in React</h1>
-      <p className="text-gray-700 mb-6">This is a simple example of using Tailwind CSS with React.</p>
-      <button className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">
-        Click Me
-      </button>
-    </div>
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Add</button>
+    </div>  
   );
 }
+// 
+// 
+// 
+// 
+// 
+// 
