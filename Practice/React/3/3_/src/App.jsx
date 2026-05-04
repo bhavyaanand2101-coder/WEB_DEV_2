@@ -206,7 +206,7 @@
 //   );
 // }
 
-import React from 'react';
+// import React from 'react';
 
 // export default function App() {
 //   return (
@@ -229,24 +229,19 @@ import React from 'react';
 // } 
 
 
-import {useState, useEffect} from 'react';
-export default function App() {
-  const [count, setCount]= useState(0);
+// import {useState, useEffect} from 'react';
+// export default function App() {
+//   const [count, setCount]= useState(0);
 
-  useEffect(()=>{
-    console.log("run");
-    }
-  )
-  return (
-    <div>
-      <h1>Count: {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Add</button>
-    </div>  
-  );
-}
-// 
-// 
-// 
-// 
-// 
-// 
+//   useEffect(()=>{
+//     console.log("run");
+//     }
+//   )
+//   return (
+//     <div>
+//       <h1>Count: {count}</h1>
+//       <button onClick={() => setCount(count + 1)}>Add</button>
+//     </div>  
+//   );
+// }
+

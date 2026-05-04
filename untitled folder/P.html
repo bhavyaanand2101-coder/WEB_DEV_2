@@ -1,0 +1,74 @@
+<!-- Q10. Store and retrieve application data using Local Storage and Session
+Storage -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Storage Lab</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .box { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        input { padding: 8px; margin: 5px; }
+        button { padding: 8px 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Web Storage API Demo</h2>
+
+    <!-- Local Storage Section -->
+    <div class="box">
+        <h3>1. Local Storage (Persistent)</h3>
+        <p>Data stays even if you close the browser.</p>
+        <input type="text" id="localInput" placeholder="Enter name...">
+        <button onclick="saveLocal()">Save to Local</button>
+        <button onclick="loadLocal()">Retrieve</button>
+        <p id="localDisplay"></p>
+    </div>
+
+    <!-- Session Storage Section -->
+    <div class="box">
+        <h3>2. Session Storage (Temporary)</h3>
+        <p>Data clears when you close the tab.</p>
+        <input type="text" id="sessionInput" placeholder="Enter session info...">
+        <button onclick="saveSession()">Save to Session</button>
+        <button onclick="loadSession()">Retrieve</button>
+        <p id="sessionDisplay"></p>
+    </div>
+
+    <button onclick="clearAll()">Clear All Storage</button>
+
+    <script>
+        // --- LOCAL STORAGE ---
+        function saveLocal() {
+            const val = document.getElementById("localInput").value;
+            localStorage.setItem("username", val);
+            alert("Saved to Local Storage!");
+        }
+
+        function loadLocal() {
+            const data = localStorage.getItem("username");
+            document.getElementById("localDisplay").textContent = "Stored Name: " + (data || "No data found");
+        }
+
+        // --- SESSION STORAGE ---
+        function saveSession() {
+            const val = document.getElementById("sessionInput").value;
+            sessionStorage.setItem("sessionID", val);
+            alert("Saved to Session Storage!");
+        }
+
+        function loadSession() {
+            const data = sessionStorage.getItem("sessionID");
+            document.getElementById("sessionDisplay").textContent = "Stored Session: " + (data || "No data found");
+        }
+
+        // --- CLEARING DATA ---
+        function clearAll() {
+            localStorage.clear();
+            sessionStorage.clear();
+            alert("All storage cleared!");
+            location.reload(); // Refresh page to see changes
+        }
+    </script>
+</body>
+</html>
